@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreGameRequest extends FormRequest
 {
@@ -13,6 +15,7 @@ class StoreGameRequest extends FormRequest
      */
     public function authorize()
     {
+        // descomentar funcional return Auth::check();
         return true;
     }
 
@@ -24,11 +27,14 @@ class StoreGameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:games|max:25',
-            'url' => 'required',
-            'description' => 'required|max:255',
-            'thumbnail' => 'required|image',
-            'status' => 'required|boolean',
+            'name' => 'required|unique:games|max:255',
+            'url' => ['required','regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i'],
+            'slug' => ['required', Rule::unique('games', 'slug')],
+            'description' => 'required|max:1024',
+            'thumbnail' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'status' => 'required',
+            'user_id' => ['required', Rule::exists('users','id')],
         ];
+
     }
 }
