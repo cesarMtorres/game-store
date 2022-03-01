@@ -8,6 +8,7 @@ use App\Http\Requests\StoreGameRequest;;
 use App\Http\Requests\UpdateGameRequest;
 use App\Interfaces\GameRepositoryInterface;
 use App\Models\Game;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use PhpParser\Node\Stmt\TryCatch;
@@ -36,12 +37,7 @@ class GameController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
+    public function create()
     {
         return view('admin.games.create');
     }
