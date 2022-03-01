@@ -1,15 +1,28 @@
 <?php
 
-namespace App\Http\Api\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Services\GameService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGameRequest;;
 use App\Http\Requests\UpdateGameRequest;
-use App\Http\Resources\GameResource;
+use App\Interfaces\GameRepositoryInterface;
 use App\Models\Game;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
+use PhpParser\Node\Stmt\TryCatch;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class GameController extends Controller
 {
+
+    protected $game;
+
+    public function __construct(GameRepositoryInterface $game)
+    {
+        $this->game = $game;
+        //$this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +30,10 @@ class GameController extends Controller
      */
     public function index()
     {
-        return GameResource::collection(Game::paginate());
+        return view('games', [
+            'games' => Game::latest()->filter(request(['search','author']))->paginate(3),
+            'currentName' => Game::firstWhere('name', request('name'))
+        ]);
     }
 
     /**
@@ -25,8 +41,9 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(StoreGameRequest $request)
+    public function create(Request $request)
     {
+        return view('admin.games.create');
     }
 
     /**
@@ -37,19 +54,16 @@ class GameController extends Controller
      */
     public function store(StoreGameRequest $request)
     {
-        $validate= $request->validated();
-        return new GameResource($validate);
-    }
+        $validate = $request->validated();
+        $validate['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
+        #$validate->user = Auth::user();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Game $game)
-    {
-        return new GameResource($game);
+        try {
+            $this->game->store($validate);
+            return redirect('/games')->with('success', 'Game is successfully saved');
+        } catch (\Exception $e) {
+            throw new HttpException(500, 'Error Al Registrar');
+        }
     }
 
     /**
@@ -60,7 +74,7 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        return view('game',['games' => $game]);
     }
 
     /**
@@ -70,7 +84,7 @@ class GameController extends Controller
      * @param  \App\Models\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGameRequest $request, Game $game)
+    public function update(UpdateGameRequest $request)
     {
       /*
        *if ($request->user()->id !== $game->user_id) {
@@ -78,8 +92,7 @@ class GameController extends Controller
        *}
        */
         $validate = $request->validated();
-        $game->update($request->$validate);
-        return new GameResource($game);
+       // $game->update($request->$validate);
     }
 
     /**
@@ -90,6 +103,16 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
-        //
+        try {
+            $this->game->delete($game);
+            return back();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    public function state($status)
+    {
+        return Game::where('state',$status)->get();
     }
 }
