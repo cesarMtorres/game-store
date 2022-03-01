@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('game', function (Blueprint $table) {
+        Schema::create('games', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('name', 255)->unique();
+            $table->string('slug')->unique();
             $table->string('url');
-            $table->text('description', 255);
+            $table->text('description', 1024);
             $table->string('thumbnail');
-            $table->enum('status', ['online','offline']); #TODO pregustar el tipo de status es on/of active/deactive o que
+            $table->string('state'); #TODO pregustar el tipo de status es on/of active/deactive o que
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('game');
+        Schema::dropIfExists('games');
     }
 };
