@@ -55,7 +55,7 @@ crear una base de datos game_store
 luego php artisan migrate:seed
 
 para el login:
-    email = admin@admin datos obtenidos por el seeders
+    email = admin@admin.com datos obtenidos por el seeders
     password = password
     o puede regitras un usuario manualmente donde el campo usarname agregar "admin"
 
