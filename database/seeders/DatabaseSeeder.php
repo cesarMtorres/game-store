@@ -22,27 +22,16 @@ class DatabaseSeeder extends Seeder
     {
 
         $user = User::factory()->create([
-            'username' => 'adassa2ssdasmin',
-            'email' => 'daddase2adsasdmin@admin.com',
+            'username' => 'admin',
+            'email' => 'admin@admin.com',
             'password' => Hash('md5','password')
         ]);
-// registrar todo los datos de un json
-        $json = Storage::get(__DIR__ . '/data.json');
-        $data = json_decode($json);
 
-        foreach ($data as $item){
-            Game::create(array(
-                'name' => $item->name,
-                'user_id' => $user,
-                'url' => $item->url,
-                'description'  => $item->description,
-            ));
-        }
-        /*
-         *Game::factory(3)->create([
-         *   'user_id' => $user
-         *]);
-         */
+
+        Game::factory(3)->create([
+            'user_id' => $user
+         ]);
+
 
     }
 }
