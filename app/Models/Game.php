@@ -5,20 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\Status;
+use Illuminate\Support\Str;
 use App\Models\User;
 class Game extends Model
 {
-    use HasFactory; // Status;
-/*
- *    protected $fillable = [
- *        'name',
- *        'description',
- *        'url',
- *        'thumbnail',
- *        'state',
- *    ];
- *
- */
+    use HasFactory;
     protected $with = ['author'];
 
     protected $guarded = [];
@@ -39,7 +30,7 @@ class Game extends Model
         $query->when($filters['search'] ?? false, fn($query, $search) =>
             $query
                 ->where('name', 'like' , '%' . $search . '%')
-                ->orWhere('slug', 'like' , '%' . $search . '%')
+                ->orWhere('description', 'like' , '%' . $search . '%')
         );
 
         //filtro de busqueda por state o estado del juego solo 2 opcciones ONLINE o OFFLINE
@@ -69,7 +60,13 @@ class Game extends Model
     {
         $this->attributes['state'] = strtoupper($value);
     }
+    // mutator
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name']=$value;
+    	$this->attributes['slug']=Str::slug($value);
+    }
     public function getStatesAttribute()
     {
         return [

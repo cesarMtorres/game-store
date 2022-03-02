@@ -1,64 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## GAME - STORE BY<p> Cesar molina</p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+Email : cesar.molina.torres.05@gmail.com
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+sistema crud para la puesto de desarollo backend developer en promarketingchile
+de acuerdo a la prueba se requeria un sistema crud.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Game store
+Cuenta con registro de usuario y login
+rol y permiso para que un usuario no pueda eliminar el juego creado por otro
+dashboard
 
-## Learning Laravel
+tailwind  para el frontend
+alpinejs  para los componentes
+policy y middlware para los persmisos
+repository pattern para el GameController 
+active record para el AdminGameController
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+El uso de respository pattern
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Ahora, en una forma normal de CRUD, podríamos simplemente implementar esas funciones en el controlador,
+pero pensemos que tenemos otro controlador para nuestra tabla Product o cualquier otro que utiliza el mismo sistema CRUD.
 
-## Laravel Sponsors
+Entonces, tenemos que escribir el mismo código una y otra vez y eso no es una buena práctica. Si tenemos otro controlador,
+también puede implementar la misma interfaz. Así, no tenemos que declarar esas mismas funciones de nuevo.
+Además, es un CRUD muy simple, pero lo que si tenemos un problema muy complejo en nuestra aplicación,
+entonces sería muy fácil de mantener a través de los diferentes repositorios. Nuestro controlador estará limpio
+y testear la aplicación será fácil. Otro ejemplo es, digamos que estamos usando MySQL y queremos cambiar a MongoDB.
+Dado que el patrón de repositorio utiliza interfaces, la logica de nuestra aplicación seguirá siendo la misma
+y todo lo que tenemos que hacer es cambiar el repositorio.
+con esto quiero decir que el patron tiene sus pro y sus contras pero aca es un basico ejemplo
+de como se puede usar y los patrones son guias asi como lo es solid.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Requerimientos
 
-### Premium Partners
+Composer 2.2.6
+laravel 9.x
+php 8.x
+aceso a internet por los CDN de tailwind y alpine js
+mysql 8.x
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
+## Inicio rapido
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+clonar el repo con git clone 
 
-## Code of Conduct
+para instalar usar el comando <p>composer install</p>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+crear el archivo .env  <p>copy .env.example .env</p>
 
-## Security Vulnerabilities
+crear una base de datos game_store
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+luego php artisan migrate:seed
 
-## License
+para el login:
+    email = admin@admin datos obtenidos por el seeders
+    password = password
+    o puede regitras un usuario manualmente donde el campo usarname agregar "admin"
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Guia rapida
+
+luego de instalar el sistema ya puede moverse como admin o guest
+
+# HOME
+la pagina home te da el catalogo de todos los juegos registrados
+
+tiene buscador integrado
+
+hacer una busqueda
+
+name |  buscar
+
+name _: el primer filtro es la lista de los juegos registrados
+
+buscar : el buscardor filtra por nombre, descriccion
+
+
+# DASHBOARD
+
+el boton dashboard te dirige a la pagina administrativa del sistema game-store
+lo cual pudes ver el listado de los juegos registrados abrir su url
+crearlos, editarlos y eliminalos (no puede eliminar juegos registrados por otro usuario)  ya que cuenta
+con permisos y roles
+
+TIPOS DE ROLES ADMIN y Guest
+
+
+## POR HACER
+
+    TDD
+    CLEAN CODE
+    mailchimps
+
+make with love 

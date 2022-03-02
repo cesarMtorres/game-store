@@ -27,14 +27,14 @@ class StoreGameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:games|max:255',
-            'url' => ['required','regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i'],
-            'slug' => ['required', Rule::unique('games', 'slug')],
-            'description' => 'required|max:1024',
-            'thumbnail' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'status' => 'required',
-            'user_id' => ['required', Rule::exists('users','id')],
+            'name'          => 'required',
+            'url'           => ['required','regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i'],
+            'description'   => 'required|max:1024',
+            'thumbnail'     => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'state'         => 'required',
         ];
+
+
 
     }
 }

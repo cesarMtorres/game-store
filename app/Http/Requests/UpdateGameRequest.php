@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateGameRequest extends FormRequest
 {
@@ -24,11 +25,14 @@ class UpdateGameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:games|max:25',
-            'url' => 'required',
-            'description' => 'required|max:255',
-            'thumbnail' => 'required|image',
-            'status' => 'required|boolean',
+            'name' => ['max:255'], // Rule::unique('games','name')->ignore($this->id)] ,
+            'url' => ['required','regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i'],
+            'description' => 'required|max:1024',
+            'thumbnail' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'state' => 'required',
         ];
+
+
+
     }
 }

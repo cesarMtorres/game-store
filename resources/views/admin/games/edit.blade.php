@@ -1,59 +1,49 @@
+<x-layout>
 
-@extends('app')
-@section('content')
-<div class="row">
-    <div class="col-sm-8 offset-sm-2">
-        <h1 class="display-3">Update</h1>
+    <x-setting :heading="'Edit Game: ' . $game->name">
+        <form method="POST" action="/admin/games/{{ $game->id }}" enctype="multipart/form-data">
+                @csrf
+                @method('PATCH')
 
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        <br />
-        @endif
-        <form method="post" enctype="multipart/form-data" action="{{ route('games.update', $game->id) }}">
-            @method('PATCH')
-            @csrf
-            <div class="form-group">
+                <!-- component input name-->
+                    <x-form.input name="name" :value="old('name', $game->name)" /> <!-- old es para la validaciones y game->name para editar-->
 
-                <label for="first_name">Name:</label>
-                <input type="text" class="form-control" name="name" value={{ $game->name }} />
-            </div>
+                <!-- component input textarea -->
+                <x-form.textarea name="description">{{ old('description', $game->description)}}</x-form.textarea>
 
-          <div class="form-group">
-              <label for="last_name">Description:</label>
-              <textarea type="text" class="form-control" name="description"/> {{$game->description}}</textarea>
-          </div>
 
-          <div class="form-group">
-              <label for="url">Url:</label>
-              <input type="text" class="form-control" name="url" value="{{$game->url}}"/>
-          </div>
-          <div class="form-group">
-              <label for="city">thumbnail:</label>
-                <div class="form-group">
-             <img src="storage/{{$game->thumbnail}}" alt="" width="120" height="90">
-                    @error('thumbnail')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                    @enderror
+                <!-- component input url -->
+                <x-form.input name="url" :value="old('url', $game->url)"/>
+                <div class="flex mt-6">
+                    <div class="flex1">
+                        <x-form.input name="file" type="file" :value="old('thumbnail', $game->thumbnail)"/>
                     </div>
-          </div>
-              <div class="form-group">
-                  <label for="status">Status:</label>
-                       <select name="status" id="status">
-                           <option>{{$game->status}}</option>
-                     <option value="ONLINE">ONLINE</option>
-                     <option value="OFFLINE">OFFLINE</option>
-                </select>
+                    <img src="{{ asset('storage/' . $game->thumbnail) }}" alt="" class="rounded-xl ml-6" width="100">
+                </div>
+                    <div class="mb-6">
+                        <x-form.label name="state"/>
+
+                            <select name="state" id="state">
+                                <option
+                                    value="ONLINE" {{$game->state ?? 'selected'}}
+                                >
+                                ONLINE
+                                </option>
+                                <option
+                                value="OFFLINE"
+                                >OFFLINE
+                                </option>
+                            </select>
+                            <x-form.error name="state" />
+                    </div>
 
 
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
-    </div>
-</div>
-@endsection
+                <x-submit>Update</x-submit>
+
+
+            </form>
+
+    </x-setting>
+
+</x-layout>
+

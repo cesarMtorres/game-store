@@ -38,11 +38,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // asesor obtener el userman
-    public function getUsernameAttribute($username)
-    {
-        return ucwords($username);
-    }
 
     // mutator para que el password se encrypte automaticamente
     public function setPasswordAttribute($password)

@@ -17,59 +17,36 @@
         <nav class="md:flex md:justify-between md:items-center">
             <div>
                 <a href="/">
-                    <img src="images/Logo-promarketing.jpeg" alt="promarketing Logo" width="165" height="16">
+                    <img src="{{ asset('images/Logo-promarketing.jpeg') }}"  width="165" height="16">
                 </a>
             </div>
 
             <div class="mt-8 md:mt-0 flex items-center">
                 @auth
-                    <span class="text-xs font-bold uppercase">{{ auth()->user()->name }}</span>
+                    <span class="text-xs font-bold uppercase">{{ auth()->user()->username }}</span>
 
                     <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">
                         @csrf
 
                         <button type="submit">Log Out</button>
                     </form>
+
+                <a href="/admin/games" class="ml-4 bg-blue-500 text-white uppercase font-semibold py-2 px-10 rounded-2xl hover:bg-blue-600">Dashboard</a>
                 @else
                     <a href="/register" class="text-xs font-bold uppercase">Register</a>
                     <a href="/login" class="ml-3 text-xs font-bold uppercase">Log In</a>
                 @endauth
 
-                    <a href="#newsletter" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
-
-                    Subscribe for Updates
-                </a>
             </div>
+
         </nav>
 
         {{ $slot }}
 
         <footer id="newsletter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
-            <h5 class="text-3xl">Stay in touch with the latest posts</h5>
-            <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>
-
-            <div class="mt-10">
-                <div class="relative inline-block mx-auto lg:bg-gray-200 rounded-full">
-
-                    <form method="POST" action="#" class="lg:flex text-sm">
-                        <div class="lg:py-3 lg:px-5 flex items-center">
-                            <label for="email" class="hidden lg:inline-block">
-                                <img src="/images/mailbox-icon.svg" alt="mailbox letter">
-                            </label>
-
-                            <input id="email" type="text" placeholder="Your email address"
-                                   class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
-                        </div>
-
-                        <button type="submit"
-                                class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8"
-                        >
-                            Subscribe
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </footer>
+            <a href="mailto:cesar.molina.torres.05@gmailcom" class="bg-blue-600 text-white">Cesar Molina</a>
+            <p class="text-sm mt-3">Make with love  </p>
+            </footer>
     </section>
     <x-flash/> <!--  MUESTRA UN MENJAJE SI SE REGISTRO EL USES-->
     </body>

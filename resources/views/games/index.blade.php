@@ -6,7 +6,7 @@
         <x-games-grid :games="$games" />
 
 
-        {{ $games->links()}}
+
     @else
         <p class="text-center"> No hay juegos registrados.</p>
     @endif

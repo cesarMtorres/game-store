@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    //
+    // registro de usuario
     public function create()
     {
         return view('register.create');
@@ -16,6 +16,7 @@ class RegisterController extends Controller
 
     public function store()
     {
+        //TODO pasarlo a un form request
         $attributes = request()->validate([
             'name' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users,username',

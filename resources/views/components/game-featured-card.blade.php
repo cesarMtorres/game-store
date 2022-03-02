@@ -4,23 +4,13 @@
                 <div class="py-6 px-5 lg:flex">
                     <div class="flex-1 lg:mr-8">
                         {{--TODO--}}
-                        <img src="/images/illustration-1.png" alt="Blog Post illustration" class="rounded-xl">
+                        <img src="{{ asset('storage/'. $game->thumbnail)}} " class="rounded-xl">
                     </div>
 
                     <div class="flex-1 flex flex-col justify-between">
                         <header class="mt-8 lg:mt-0">
                             <div class="space-x-2">
-                                <a href="/games/{{ $game->id }}"
-                                   class="px-3 py-1 border border-blue-300 rounded-full text-blue-300 text-xs uppercase font-semibold"
-                                   style="font-size: 10px">UPDATE</a>
-
-                                    <form action="{{ route('games.destroy', $game->id)}}" method="post">
-                                      @csrf
-                                      @method('DELETE')
-                                      <button class="px-3 py-1 border border-red-300 rounded-full text-red-300 text-xs uppercase font-semibold"
-                                               style="font-size: 10px">DELETE</button>
-                                    </form>
-
+                                <x-state-button :game="$game" />
                             </div>
 
                             <div class="mt-4">
@@ -36,7 +26,7 @@
                         </header>
 
                         <div class="text-sm mt-2">
-                            <p>{{$game->slug}}</p>
+                            <p>{{$game->description}}</p>
                         </div>
 
                         <footer class="flex justify-between items-center mt-8">
@@ -49,7 +39,15 @@
 
                                 </div>
                             </div>
+
+                                <div>
+                                    <a href="/games/{{$game->slug }}"
+                                       class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"
+                                       >Ver</a>
+                                </div>
                         </footer>
+
                     </div>
+
                 </div>
             </article>
