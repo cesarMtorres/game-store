@@ -52,7 +52,14 @@ crear el archivo .env  <p>copy .env.example .env</p>
 
 crear una base de datos game_store
 
-luego php artisan migrate:seed
+php artisan migrate
+php artisan db:seed 
+
+con el comando seed crea el usuario admin y crear varios juegos del enunciado a traves 
+de un json ubicado en storage/app/public/data.json
+
+otros comandos para hacer rollback y migrar de nuevo la data
+php artisan migrate:fresh --seed
 
 para el login:
     email = admin@admin.com datos obtenidos por el seeders
