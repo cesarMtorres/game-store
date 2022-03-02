@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         //creamos un admin
         $user = User::factory()->create([
             'username' => 'admin',
-            'email' => 'admin@admin.com',
-            'password' => Hash('md5','password')
+            'email' => 'admin@gmail.com',
+            'password' => 'password',
         ]);
 
         // obtenemos el los datos json
