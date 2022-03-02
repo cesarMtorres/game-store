@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         //creamos un admin
         $user = User::factory()->create([
             'username' => 'admin',
-            'email' => 'admin@gmail.com',
+            'email' => 'admin@admin.com',
             'password' => 'password',
         ]);
 
