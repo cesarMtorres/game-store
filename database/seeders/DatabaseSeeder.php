@@ -20,12 +20,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
+        //creamos un admin
         $user = User::factory()->create([
             'username' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash('md5','password')
         ]);
+
+        // obtenemos el los datos json
         $json = Storage::get('/data.json');
         $data = json_decode($json);
 
@@ -34,6 +36,7 @@ class DatabaseSeeder extends Seeder
                 'name' => $item->name,
                 'user_id' => $user->id,
                 'state' => 'ONLINE',
+                'thumbnail' => $item->thumbnail,
                 'url' => $item->url,
                 'description'  => $item->description,
             ));
