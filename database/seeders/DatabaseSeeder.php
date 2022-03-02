@@ -26,12 +26,23 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash('md5','password')
         ]);
+        $json = Storage::get('/data.json');
+        $data = json_decode($json);
 
-
-        Game::factory(3)->create([
-            'user_id' => $user
-         ]);
-
+        foreach ($data->data as $item){
+            Game::create(array(
+                'name' => $item->name,
+                'user_id' => $user->id,
+                'state' => 'ONLINE',
+                'url' => $item->url,
+                'description'  => $item->description,
+            ));
+        }
+        /*
+         *Game::factory(3)->create([
+         *   'user_id' => $user
+         *]);
+         */
 
     }
 }
