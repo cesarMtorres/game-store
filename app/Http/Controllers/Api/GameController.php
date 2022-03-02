@@ -36,10 +36,11 @@ class GameController extends Controller
             'currentName' => Game::firstWhere('name', request('name'))
         ]);
     }
-
-    public function create()
+    public function show(Game $game)
     {
-        return view('admin.games.create');
+        return view('games.show', [
+            'game' => $game
+        ]);
     }
 
     /**
@@ -52,11 +53,12 @@ class GameController extends Controller
     {
         $validate = $request->validated();
         $validate['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
-        #$validate->user = Auth::user();
-
+        $validate['user_id'] = Auth::user()->id;
         try {
+
             $this->game->store($validate);
-            return redirect('/games')->with('success', 'Game is successfully saved');
+            return redirect('/')->with('success', 'Game is successfully saved');
+
         } catch (\Exception $e) {
             throw new HttpException(500, 'Error Al Registrar');
         }
@@ -70,7 +72,7 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        return view('game',['games' => $game]);
+        return view('games.show',['game' => $game]);
     }
 
     /**
