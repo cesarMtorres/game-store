@@ -2,26 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Services\GameService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreGameRequest;;
-use App\Http\Requests\UpdateGameRequest;
-use App\Interfaces\GameRepositoryInterface;
 use App\Models\Game;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
-use PhpParser\Node\Stmt\TryCatch;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Services\GameService;
+
 
 class GameController extends Controller
 {
 
-    protected $game;
+    protected $gameservice;
 
-    public function __construct(GameRepositoryInterface $game)
+    public function __construct(GameService $gameservice)
     {
-        $this->game = $game;
+        $this->gameservice = $gameservice;
     }
     /**
      * Display a listing of the resource.
@@ -30,11 +23,10 @@ class GameController extends Controller
      */
     public function index()
     {
-        return view('games', [
-            'games' => Game::latest()->filter(request(['search','author']))->paginate(3),
-            'currentName' => Game::firstWhere('name', request('name'))
-        ]);
+        return view('games', $this->gameservice->getAll());
+
     }
+
     public function show(Game $game)
     {
         return view('games.show', [
@@ -45,6 +37,6 @@ class GameController extends Controller
 
     public function state($status)
     {
-        return Game::where('state',$status)->get();
+        return $this->gameservice->state($status);
     }
 }

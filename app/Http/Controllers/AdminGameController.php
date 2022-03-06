@@ -28,7 +28,6 @@ class AdminGameController extends Controller
     {
         $validate = $request->validated();
         $validate['user_id'] = Auth::user()->id;
-
         // si el thumbnail paso la validacion registra la imagen en public storage
         if (isset($validate['thumbnail'])){
 
